@@ -10,6 +10,7 @@ URL:		https://github.com/gitlabhq/gitlab-shell
 Patch0:		config.yml.patch
 Requires:	redis
 Requires:	ruby-bundler
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define gitlab_uid 65434
