@@ -1,15 +1,15 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
 Version:	2.6.12
-Release:	0.1
+Release:	0.3
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	730c60e3d3d14d0f0ce0e82ff3a88a23
 URL:		https://github.com/gitlabhq/gitlab-shell
 Patch0:		config.yml.patch
-Requires:	redis
-Requires:	ruby-bundler
+Suggests:	redis
+#Requires:	ruby-bundler
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -61,8 +61,10 @@ fi
 %defattr(644,root,root,755)
 %doc LICENSE
 %dir %{_datadir}/gitlab-shell
+%dir %{_sysconfdir}/gitlab
 %config(noreplace) %{_sysconfdir}/gitlab/gitlab-shell-config.yml
 %{_datadir}/gitlab-shell/*
+%dir %{homedir}
 %dir %attr(700,gitlab,gitlab) %{homedir}/.ssh
 %config(noreplace) %attr(600,gitlab,gitlab) %{homedir}/.ssh/authorized_keys
 %dir %attr(2770,gitlab,gitlab) %{homedir}/repositories
