@@ -1,7 +1,7 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
 Version:	2.6.12
-Release:	0.7
+Release:	0.8
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -42,6 +42,10 @@ cp -a * $RPM_BUILD_ROOT%{_datadir}/%{name}
 rm -r $RPM_BUILD_ROOT%{_datadir}/%{name}/spec
 rm $RPM_BUILD_ROOT%{_datadir}/%{name}/G*
 rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/debug*
+# deprecated
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}/support/rewrite-hooks.sh
+# stupid script, rather not package it at all
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}/support/truncate_repositories.sh*
 
 install -d $RPM_BUILD_ROOT%{homedir}/.ssh
 touch $RPM_BUILD_ROOT%{homedir}/.ssh/authorized_keys
@@ -87,8 +91,6 @@ fi
 %{_datadir}/%{name}/config.yml
 %dir %{_datadir}/%{name}/hooks
 %attr(755,root,root) %{_datadir}/%{name}/hooks/*
-%dir %{_datadir}/%{name}/support
-%attr(755,root,root) %{_datadir}/%{name}/support/*
 
 %dir %{homedir}
 %dir %attr(700,gitlab,gitlab) %{homedir}/.ssh
