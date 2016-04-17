@@ -1,7 +1,7 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
 Version:	2.6.12
-Release:	0.8
+Release:	0.9
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -26,9 +26,13 @@ a replacement for Bash or Zsh.
 
 %prep
 %setup -q
+cp -p config.yml.example config.yml
 %patch0 -p1
 
-mv config.yml.example config.yml
+# deprecated
+rm support/rewrite-hooks.sh
+# stupid script, rather not package it at all
+rm support/truncate_repositories.sh*
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
@@ -36,21 +40,10 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -a * $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -a *.yml bin lib hooks support $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-# exclude tests and other unwanted files
-rm -r $RPM_BUILD_ROOT%{_datadir}/%{name}/spec
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}/G*
-rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/debug*
-# deprecated
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}/support/rewrite-hooks.sh
-# stupid script, rather not package it at all
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}/support/truncate_repositories.sh*
-
-install -d $RPM_BUILD_ROOT%{homedir}/.ssh
+install -d $RPM_BUILD_ROOT%{homedir}/{.ssh,repositories}
 touch $RPM_BUILD_ROOT%{homedir}/.ssh/authorized_keys
-
-install -d $RPM_BUILD_ROOT%{homedir}/repositories
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/gitlab
 mv $RPM_BUILD_ROOT%{_datadir}/gitlab-shell/config.yml $RPM_BUILD_ROOT%{_sysconfdir}/gitlab/gitlab-shell-config.yml
@@ -78,7 +71,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE
+%doc README.md CHANGELOG LICENSE VERSION
 %dir %{_sysconfdir}/gitlab
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/gitlab-shell-config.yml
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/.gitlab_shell_secret
@@ -87,7 +80,6 @@ fi
 %dir %{_datadir}/%{name}/bin
 %attr(755,root,root) %{_datadir}/%{name}/bin/*
 %{_datadir}/%{name}/.gitlab_shell_secret
-%{_datadir}/%{name}/[A-Z]*
 %{_datadir}/%{name}/config.yml
 %dir %{_datadir}/%{name}/hooks
 %attr(755,root,root) %{_datadir}/%{name}/hooks/*
