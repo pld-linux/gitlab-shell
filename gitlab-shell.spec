@@ -10,6 +10,7 @@ Patch0:		config.yml.patch
 URL:		https://github.com/gitlabhq/gitlab-shell
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
+Requires:	ruby >= 1:2.0
 Suggests:	redis
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
