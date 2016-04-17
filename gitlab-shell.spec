@@ -11,6 +11,7 @@ URL:		https://github.com/gitlabhq/gitlab-shell
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	sed >= 4.0
+Requires:	git-core >= 2.7.3
 Requires:	redis >= 2.8.0
 Requires:	ruby >= 1:2.0
 BuildArch:	noarch
