@@ -1,7 +1,7 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
 Version:	2.6.12
-Release:	0.9
+Release:	0.10
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -10,6 +10,7 @@ Patch0:		config.yml.patch
 URL:		https://github.com/gitlabhq/gitlab-shell
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
+BuildRequires:	sed >= 4.0
 Requires:	ruby >= 1:2.0
 Suggests:	redis
 BuildArch:	noarch
@@ -28,6 +29,8 @@ a replacement for Bash or Zsh.
 %setup -q
 cp -p config.yml.example config.yml
 %patch0 -p1
+
+%{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/* hooks/*
 
 # deprecated
 rm support/rewrite-hooks.sh
