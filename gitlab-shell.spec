@@ -1,7 +1,7 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
 Version:	2.6.12
-Release:	0.3
+Release:	0.5
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -28,10 +28,17 @@ a replacement for Bash or Zsh.
 
 mv config.yml.example config.yml
 
+# cleanup backups after patching
+find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_datadir}/gitlab-shell
-cp -a * $RPM_BUILD_ROOT%{_datadir}/gitlab-shell
+install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -a * $RPM_BUILD_ROOT%{_datadir}/%{name}
+
+# exclude tests and other unwanted files
+rm -r $RPM_BUILD_ROOT%{_datadir}/%{name}/spec
+rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/debug*
 
 install -d $RPM_BUILD_ROOT%{homedir}/.ssh
 touch $RPM_BUILD_ROOT%{homedir}/.ssh/authorized_keys
@@ -60,10 +67,19 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc LICENSE
-%dir %{_datadir}/gitlab-shell
 %dir %{_sysconfdir}/gitlab
 %config(noreplace) %{_sysconfdir}/gitlab/gitlab-shell-config.yml
-%{_datadir}/gitlab-shell/*
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/lib
+%dir %{_datadir}/%{name}/bin
+%attr(755,root,root) %{_datadir}/%{name}/bin/*
+%{_datadir}/%{name}/[A-Z]*
+%{_datadir}/%{name}/config.yml
+%dir %{_datadir}/%{name}/hooks
+%attr(755,root,root) %{_datadir}/%{name}/hooks/*
+%dir %{_datadir}/%{name}/support
+%attr(755,root,root) %{_datadir}/%{name}/support/*
+
 %dir %{homedir}
 %dir %attr(700,gitlab,gitlab) %{homedir}/.ssh
 %config(noreplace) %attr(600,gitlab,gitlab) %{homedir}/.ssh/authorized_keys
