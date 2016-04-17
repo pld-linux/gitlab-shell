@@ -1,7 +1,7 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
 Version:	2.6.12
-Release:	0.6
+Release:	0.7
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -40,6 +40,7 @@ cp -a * $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # exclude tests and other unwanted files
 rm -r $RPM_BUILD_ROOT%{_datadir}/%{name}/spec
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}/G*
 rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/debug*
 
 install -d $RPM_BUILD_ROOT%{homedir}/.ssh
