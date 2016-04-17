@@ -43,7 +43,7 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -a *.yml bin lib hooks support $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -a VERSION *.yml bin lib hooks support $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 install -d $RPM_BUILD_ROOT%{homedir}/{.ssh,repositories}
 touch $RPM_BUILD_ROOT%{homedir}/.ssh/authorized_keys
@@ -74,7 +74,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README.md CHANGELOG LICENSE VERSION
+%doc README.md CHANGELOG LICENSE
 %dir %{_sysconfdir}/gitlab
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/gitlab-shell-config.yml
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/.gitlab_shell_secret
@@ -84,6 +84,7 @@ fi
 %attr(755,root,root) %{_datadir}/%{name}/bin/*
 %{_datadir}/%{name}/.gitlab_shell_secret
 %{_datadir}/%{name}/config.yml
+%{_datadir}/%{name}/VERSION
 %dir %{_datadir}/%{name}/hooks
 %attr(755,root,root) %{_datadir}/%{name}/hooks/*
 
