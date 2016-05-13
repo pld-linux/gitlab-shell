@@ -1,11 +1,11 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
-Version:	2.6.12
+Version:	2.7.2
 Release:	1
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	730c60e3d3d14d0f0ce0e82ff3a88a23
+# Source0-md5:	59d89706642ba34d859448405bec9baf
 Patch0:		config.yml.patch
 URL:		https://github.com/gitlabhq/gitlab-shell
 BuildRequires:	rpm-rubyprov
