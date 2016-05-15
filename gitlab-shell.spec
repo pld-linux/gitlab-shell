@@ -17,6 +17,7 @@ BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	sed >= 4.0
 Provides:	group(%{gname})
 Provides:	user(%{uname})
+Conflicts:	gitlab-ce < 8.7.5-0.17
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
 Requires(pre):	/bin/id
@@ -76,10 +77,15 @@ rm -rf $RPM_BUILD_ROOT
 %useradd -u %{uid} -c 'Git user' -d %{homedir} -g git -s /bin/false %{uname}
 
 %post
-if [ $1 -eq 1 ]; then
-	echo "INFO: after installing gitlab run:"
-	echo "      sudo -u gitlab -H bundle exec rake gitlab:shell:setup RAILS_ENV=production"
-fi
+%banner -o -e %{name} <<EOF
+
+To rebuild authorized_keys file, run:
+
+  # gitlab-rake gitlab:shell:setup
+
+http://docs.gitlab.com/ce/raketasks/maintenance.html#rebuild-authorized_keys-file
+
+EOF
 
 %postun
 if [ "$1" = "0" ]; then
