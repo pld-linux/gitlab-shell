@@ -27,6 +27,7 @@ Requires(pre):	/usr/sbin/useradd
 Requires:	git-core >= 2.7.3
 Requires:	ruby >= 1:2.0
 Requires:	ruby-redis >= 3.3.0
+Suggests:	redis-server
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
