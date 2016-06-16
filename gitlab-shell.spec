@@ -4,12 +4,12 @@
 %define gname git
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
-Version:	2.7.2
+Version:	3.0.0
 Release:	1
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	59d89706642ba34d859448405bec9baf
+# Source0-md5:	1798d8026f92729b607d9656ca6c6c01
 Patch0:		config.yml.patch
 URL:		https://github.com/gitlabhq/gitlab-shell
 BuildRequires:	rpm-rubyprov
@@ -25,8 +25,8 @@ Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires:	git-core >= 2.7.3
-Requires:	redis >= 2.8.0
 Requires:	ruby >= 1:2.0
+Requires:	ruby-redis >= 3.3.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
