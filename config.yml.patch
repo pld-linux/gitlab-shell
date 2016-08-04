@@ -1,5 +1,5 @@
---- gitlab-shell-1.9.5/config.yml	2014-06-02 04:44:18.214779888 +0200
-+++ gitlab-shell-1.9.5/config.yml	2014-06-02 04:44:18.214779888 +0200
+--- gitlab-shell-3.3.0/config.yml~	2016-08-04 09:24:14.000000000 +0300
++++ gitlab-shell-3.3.0/config.yml	2016-08-04 09:26:47.671443673 +0300
 @@ -1,5 +1,5 @@
  # GitLab user. git by default
 -user: git
@@ -7,19 +7,15 @@
  
  # Url to gitlab instance. Used for api calls. Should end with a slash.
  gitlab_url: "http://localhost/"
-@@ -15,10 +15,10 @@
- # Give the canonicalized absolute pathname,
- # REPOS_PATH MUST NOT CONTAIN ANY SYMLINK!!!
- # Check twice that none of the components is a symlink, including "/home".
--repos_path: "/home/git/repositories"
-+repos_path: "/var/lib/gitlab/repositories"
+@@ -25,7 +25,7 @@
+   self_signed_cert: false
  
  # File used as authorized_keys for gitlab user
 -auth_file: "/home/git/.ssh/authorized_keys"
 +auth_file: "/var/lib/gitlab/.ssh/authorized_keys"
  
- # Redis settings used for pushing commit notices to gitlab
- redis:
+ # File that contains the secret key for verifying access to GitLab.
+ # Default is .gitlab_shell_secret in the root directory.
 @@ -35,21 +35,21 @@
  
  # File that contains the secret key for verifying access to GitLab.

@@ -5,3 +5,8 @@
  require 'yaml'
  
  class GitlabConfig
+--- gitlab-shell-3.3.0/lib/gitlab_redis.rb~	2016-07-27 18:29:35.000000000 +0300
++++ gitlab-shell-3.3.0/lib/gitlab_redis.rb	2016-08-04 09:31:43.753514191 +0300
+@@ -1,2 +1 @@
+-$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), 'vendor/redis/lib')))
+ require 'redis'
