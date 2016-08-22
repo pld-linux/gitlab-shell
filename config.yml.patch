@@ -1,12 +1,5 @@
---- gitlab-shell-3.3.0/config.yml~	2016-08-04 09:24:14.000000000 +0300
-+++ gitlab-shell-3.3.0/config.yml	2016-08-04 09:26:47.671443673 +0300
-@@ -1,5 +1,5 @@
- # GitLab user. git by default
--user: git
-+user: gitlab
- 
- # Url to gitlab instance. Used for api calls. Should end with a slash.
- gitlab_url: "http://localhost/"
+--- gitlab-shell-3.4.0/config.yml~	2016-08-22 22:11:19.000000000 +0300
++++ gitlab-shell-3.4.0/config.yml	2016-08-22 22:12:26.188946328 +0300
 @@ -25,7 +25,7 @@
    self_signed_cert: false
  
@@ -16,7 +9,7 @@
  
  # File that contains the secret key for verifying access to GitLab.
  # Default is .gitlab_shell_secret in the root directory.
-@@ -35,21 +35,21 @@
+@@ -29,16 +29,16 @@
  
  # File that contains the secret key for verifying access to GitLab.
  # Default is .gitlab_shell_secret in the root directory.
@@ -32,9 +25,12 @@
 +  port: 6379
    # pass: redispass # Allows you to specify the password for Redis
    database: 0
--  socket: /var/run/redis/redis.sock # Comment out this line if you want to use TCP
-+#  socket: /var/run/redis/redis.sock # Comment out this line if you want to use TCP
+-  socket: /var/run/redis/redis.sock # Comment out this line if you want to use TCP or Sentinel
++#  socket: /var/run/redis/redis.sock # Comment out this line if you want to use TCP or Sentinel
    namespace: resque:gitlab
+   # sentinels:
+   #   -
+@@ -51,7 +51,7 @@
  
  # Log file.
  # Default is gitlab-shell.log in the root directory.

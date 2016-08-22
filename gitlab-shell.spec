@@ -4,12 +4,12 @@
 %define gname git
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
-Version:	3.3.2
+Version:	3.4.0
 Release:	1
 License:	MIT
 Group:		Applications/Shells
-Source0:	https://github.com/gitlabhq/gitlab-shell/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	d456a489d1611954837e1fd4685789e2
+Source0:	https://gitlab.com/gitlab-org/gitlab-shell/repository/archive.tar.gz?ref=v%{version}&/%{name}-%{version}.tar.gz
+# Source0-md5:	cd548940ee1a3c796f5b65b577b870b0
 Patch0:		config.yml.patch
 URL:		https://gitlab.com/gitlab-org/gitlab-shell
 BuildRequires:	rpm-rubyprov
@@ -39,7 +39,8 @@ and provide ssh access to git repositories. It is not a Unix shell nor
 a replacement for Bash or Zsh.
 
 %prep
-%setup -q
+%setup -qc
+mv %{name}-*/* .
 cp -p config.yml.example config.yml
 %patch0 -p1
 
