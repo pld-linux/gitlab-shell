@@ -26,6 +26,7 @@ Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires:	git-core >= 2.7.3
+Requires:	rsync
 Requires:	ruby >= 1:2.0
 Requires:	ruby-redis >= 3.3.0
 Suggests:	redis-server
