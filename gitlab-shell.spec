@@ -105,7 +105,7 @@ fi
 %doc README.md CHANGELOG LICENSE
 %dir %{_sysconfdir}/gitlab
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/gitlab-shell-config.yml
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/.gitlab_shell_secret
+%attr(640,%{uname},%{gname}) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/.gitlab_shell_secret
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/lib
 %dir %{_datadir}/%{name}/bin
