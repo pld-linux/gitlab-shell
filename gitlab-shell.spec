@@ -11,6 +11,7 @@ Group:		Applications/Shells
 Source0:	https://gitlab.com/gitlab-org/gitlab-shell/repository/archive.tar.gz?ref=v%{version}&/%{name}-%{version}.tar.gz
 # Source0-md5:	e863a2b6e978b5da886842822861e327
 Patch0:		config.yml.patch
+Patch1:		unvendor-redis.patch
 URL:		https://gitlab.com/gitlab-org/gitlab-shell
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
@@ -43,8 +44,11 @@ a replacement for Bash or Zsh.
 mv %{name}-*/* .
 cp -p config.yml.example config.yml
 %patch0 -p1
+%patch1 -p1
 
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/* hooks/*
+
+mv lib/vendor .
 
 # deprecated
 rm support/rewrite-hooks.sh
