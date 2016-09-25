@@ -1,7 +1,3 @@
-%define uid 264
-%define gid 264
-%define uname git
-%define gname git
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
 Version:	3.6.0
@@ -16,24 +12,15 @@ URL:		https://gitlab.com/gitlab-org/gitlab-shell
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	sed >= 4.0
-Provides:	group(%{gname})
-Provides:	user(%{uname})
-Conflicts:	gitlab-ce < 8.7.5-0.17
-Requires(postun):	/usr/sbin/groupdel
-Requires(postun):	/usr/sbin/userdel
-Requires(pre):	/bin/id
-Requires(pre):	/usr/bin/getgid
-Requires(pre):	/usr/sbin/groupadd
-Requires(pre):	/usr/sbin/useradd
 Requires:	git-core >= 2.7.3
+Requires:	gitlab-common >= 8.12
 Requires:	rsync
 Requires:	ruby >= 1:2.0
 Requires:	ruby-redis >= 3.3.0
 Suggests:	redis-server
+Conflicts:	gitlab-ce < 8.7.5-0.17
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define homedir %{_localstatedir}/lib/gitlab
 
 %description
 GitLab Shell is an application that allows you to execute git commands
@@ -64,9 +51,6 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -a VERSION *.yml bin lib hooks support $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-install -d $RPM_BUILD_ROOT%{homedir}/{.ssh,repositories}
-touch $RPM_BUILD_ROOT%{homedir}/.ssh/authorized_keys
-
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/gitlab
 mv $RPM_BUILD_ROOT%{_datadir}/gitlab-shell/config.yml $RPM_BUILD_ROOT%{_sysconfdir}/gitlab/gitlab-shell-config.yml
 ln -sf %{_sysconfdir}/gitlab/gitlab-shell-config.yml $RPM_BUILD_ROOT%{_datadir}/gitlab-shell/config.yml
@@ -79,10 +63,6 @@ ln -s %{_sysconfdir}/gitlab/.gitlab_shell_secret $RPM_BUILD_ROOT%{_datadir}/%{na
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%pre
-%groupadd -g %{gid} %{gname}
-%useradd -u %{uid} -c 'Git user' -d %{homedir} -g git -s /bin/false %{uname}
-
 %post
 %banner -o -e %{name} <<EOF
 
@@ -94,18 +74,11 @@ http://docs.gitlab.com/ce/raketasks/maintenance.html#rebuild-authorized_keys-fil
 
 EOF
 
-%postun
-if [ "$1" = "0" ]; then
-	%userremove git
-	%groupremove git
-fi
-
 %files
 %defattr(644,root,root,755)
 %doc README.md CHANGELOG LICENSE
-%dir %{_sysconfdir}/gitlab
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/gitlab-shell-config.yml
-%attr(640,%{uname},%{gname}) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/.gitlab_shell_secret
+%attr(640,git,git) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gitlab/.gitlab_shell_secret
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/lib
 %dir %{_datadir}/%{name}/bin
@@ -115,8 +88,3 @@ fi
 %{_datadir}/%{name}/VERSION
 %dir %{_datadir}/%{name}/hooks
 %attr(755,root,root) %{_datadir}/%{name}/hooks/*
-
-%dir %{homedir}
-%dir %attr(700,%{uname},%{gname}) %{homedir}/.ssh
-%config(noreplace) %attr(600,%{uname},%{gname}) %{homedir}/.ssh/authorized_keys
-%dir %attr(2770,%{uname},%{gname}) %{homedir}/repositories
