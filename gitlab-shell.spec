@@ -1,11 +1,11 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
-Version:	3.6.2
+Version:	3.6.6
 Release:	1
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://gitlab.com/gitlab-org/gitlab-shell/repository/archive.tar.gz?ref=v%{version}&/%{name}-%{version}.tar.gz
-# Source0-md5:	87bffc009e77b6043bca8ef2a1fcd2d0
+# Source0-md5:	94fd70cb6fd38c8fd7cd9c4ccc371d7e
 Patch0:		config.yml.patch
 Patch1:		unvendor-redis.patch
 URL:		https://gitlab.com/gitlab-org/gitlab-shell
