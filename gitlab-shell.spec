@@ -6,8 +6,9 @@ License:	MIT
 Group:		Applications/Shells
 Source0:	https://gitlab.com/gitlab-org/gitlab-shell/repository/archive.tar.bz2?ref=v%{version}&/%{name}-%{version}.tar.bz2
 # Source0-md5:	54a8a5374007277982dea2f9f07a99d1
-Patch0:		config.yml.patch
-Patch1:		unvendor-redis.patch
+Patch0:		unvendor-redis.patch
+Patch1:		skip_hooks_setup.patch
+Patch2:		config.yml.patch
 URL:		https://gitlab.com/gitlab-org/gitlab-shell
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.665
@@ -30,9 +31,10 @@ a replacement for Bash or Zsh.
 %prep
 %setup -qc
 mv %{name}-*/* .
-cp -p config.yml.example config.yml
 %patch0 -p1
 %patch1 -p1
+cp -p config.yml.example config.yml
+%patch2 -p1
 
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/* hooks/*
 

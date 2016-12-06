@@ -1,0 +1,54 @@
+commit 9ad4db607e008110de4cfb6b6d971d0e8b53edac
+Author: Elan Ruusamäe <glen@delfi.ee>
+Date:   Tue Dec 6 09:43:09 2016 +0200
+
+    add a way to disable hooks setup
+    
+    really useful when migrating slowly to gitlab without affecting existing
+    repositories
+
+diff --git a/config.yml.example b/config.yml.example
+index 0164830..de52a31 100644
+--- a/config.yml.example
++++ b/config.yml.example
+@@ -69,6 +69,10 @@ audit_usernames: false
+ # For CentOS: sudo yum install epel-release && sudo yum install git-annex
+ git_annex_enabled: false
+ 
++# disable hooks setup in git repos
++# useful when migrating
++hooks_setup_disabled: false
++
+ # Git trace log file.
+ # If set, git commands receive GIT_TRACE* environment variables
+ # See https://git-scm.com/book/es/v2/Git-Internals-Environment-Variables#Debugging for documentation
+diff --git a/lib/gitlab_config.rb b/lib/gitlab_config.rb
+index f8a10cf..3714d8c 100644
+--- a/lib/gitlab_config.rb
++++ b/lib/gitlab_config.rb
+@@ -51,6 +51,10 @@ class GitlabConfig
+     @config['git_annex_enabled'] ||= false
+   end
+ 
++  def hooks_setup_disabled?
++    @config['hooks_setup_disabled'] ||= false
++  end
++
+   def git_trace_log_file
+     @config['git_trace_log_file']
+   end
+diff --git a/lib/gitlab_projects.rb b/lib/gitlab_projects.rb
+index 505b49e..e8ad797 100644
+--- a/lib/gitlab_projects.rb
++++ b/lib/gitlab_projects.rb
+@@ -23,6 +23,10 @@ class GitlabProjects
+   attr_reader :full_path
+ 
+   def self.create_hooks(path)
++    config = GitlabConfig.new
++    # local administrator might have disabled hooks setup
++    return true if config.hooks_setup_disabled?
++
+     local_hooks_directory = File.join(path, 'hooks')
+     real_local_hooks_directory = :not_found
+     begin
