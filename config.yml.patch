@@ -1,5 +1,5 @@
---- gitlab-shell-3.4.0/config.yml~	2016-08-22 22:11:19.000000000 +0300
-+++ gitlab-shell-3.4.0/config.yml	2016-08-22 22:12:26.188946328 +0300
+--- gitlab-shell-4.1.1/config.yml~	2016-12-23 20:20:05.000000000 +0200
++++ gitlab-shell-4.1.1/config.yml	2016-12-23 20:20:45.966319553 +0200
 @@ -25,7 +25,7 @@
    self_signed_cert: false
  
@@ -9,13 +9,16 @@
  
  # File that contains the secret key for verifying access to GitLab.
  # Default is .gitlab_shell_secret in the root directory.
-@@ -29,16 +29,16 @@
+@@ -29,7 +29,7 @@
  
  # File that contains the secret key for verifying access to GitLab.
- # Default is .gitlab_shell_secret in the root directory.
+ # Default is .gitlab_shell_secret in the gitlab-shell directory.
 -# secret_file: "/home/git/gitlab-shell/.gitlab_shell_secret"
 +secret_file: "/etc/gitlab/.gitlab_shell_secret"
  
+ # Parent directory for global custom hook directories (pre-receive.d, update.d, post-receive.d)
+ # Default is hooks in the gitlab-shell directory.
+@@ -38,11 +38,11 @@
  # Redis settings used for pushing commit notices to gitlab
  redis:
    bin: /usr/bin/redis-cli
