@@ -40,6 +40,10 @@ cp -p config.yml.example config.yml
 
 mv lib/vendor .
 
+# add hook dirs
+# https://gitlab.com/gitlab-org/gitlab-shell/merge_requests/93
+install -d hooks/{post-receive,pre-receive,update}.d
+
 # deprecated
 rm support/rewrite-hooks.sh
 # stupid script, rather not package it at all
@@ -88,5 +92,11 @@ EOF
 %{_datadir}/%{name}/.gitlab_shell_secret
 %{_datadir}/%{name}/config.yml
 %{_datadir}/%{name}/VERSION
+
 %dir %{_datadir}/%{name}/hooks
-%attr(755,root,root) %{_datadir}/%{name}/hooks/*
+%dir %{_datadir}/%{name}/hooks/post-receive.d
+%dir %{_datadir}/%{name}/hooks/pre-receive.d
+%dir %{_datadir}/%{name}/hooks/update.d
+%attr(755,root,root) %{_datadir}/%{name}/hooks/post-receive
+%attr(755,root,root) %{_datadir}/%{name}/hooks/pre-receive
+%attr(755,root,root) %{_datadir}/%{name}/hooks/update
