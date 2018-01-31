@@ -1,11 +1,11 @@
 Summary:	GitLab ssh access and repository management
 Name:		gitlab-shell
-Version:	5.9.4
+Version:	5.11.0
 Release:	1
 License:	MIT
 Group:		Applications/Shells
 Source0:	https://gitlab.com/gitlab-org/gitlab-shell/repository/archive.tar.bz2?ref=v%{version}&/%{name}-%{version}.tar.bz2
-# Source0-md5:	bd383d50ee7299332f9e3ed6d900deb2
+# Source0-md5:	275faae9b75785f595aed87c8eb3a577
 Patch0:		unvendor-redis.patch
 Patch1:		skip_hooks_setup.patch
 Patch2:		config.yml.patch
@@ -55,7 +55,7 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -a VERSION *.yml bin lib hooks support $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -a VERSION *.yml bin lib hooks $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/gitlab
 mv $RPM_BUILD_ROOT%{_datadir}/gitlab-shell/config.yml $RPM_BUILD_ROOT%{_sysconfdir}/gitlab/gitlab-shell-config.yml

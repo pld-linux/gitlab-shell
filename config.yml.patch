@@ -1,5 +1,5 @@
---- gitlab-shell-4.1.1/config.yml~	2016-12-23 20:20:05.000000000 +0200
-+++ gitlab-shell-4.1.1/config.yml	2016-12-23 20:20:45.966319553 +0200
+--- gitlab-shell-5.11.0/config.yml~	2018-01-31 22:52:26.000000000 +0200
++++ gitlab-shell-5.11.0/config.yml	2018-01-31 22:53:20.803527526 +0200
 @@ -25,7 +25,7 @@
    self_signed_cert: false
  
@@ -18,10 +18,10 @@
  
  # Parent directory for global custom hook directories (pre-receive.d, update.d, post-receive.d)
  # Default is hooks in the gitlab-shell directory.
-@@ -38,11 +38,11 @@
+@@ -37,11 +37,11 @@
+ 
  # Redis settings used for pushing commit notices to gitlab
  redis:
-   bin: /usr/bin/redis-cli
 -  # host: 127.0.0.1
 -  # port: 6379
 +  host: 127.0.0.1
