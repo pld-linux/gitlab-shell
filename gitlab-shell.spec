@@ -31,10 +31,10 @@ a replacement for Bash or Zsh.
 %prep
 %setup -qc
 mv %{name}-*/* .
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 cp -p config.yml.example config.yml
-%patch2 -p1
+%patch -P2 -p1
 
 %{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/* hooks/*
 
